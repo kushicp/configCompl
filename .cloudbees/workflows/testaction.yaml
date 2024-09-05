@@ -29,3 +29,14 @@ jobs:
         changed_dirs=$(echo "$changed_files" | xargs -n1 dirname | sort | uniq)
         echo "=== Changed dirs ==="
         echo "$changed_dirs"
+    - id: createManualApprove
+      name: Create Manual Approve
+      uses: docker://alpine/curl:latest
+      run: |  
+        curl -i -X 'POST' "$URL/v1/workflows/approval" -d '{"approvers": ["8d0cd28e-39ca-11eb-915a-42010a83aee0"], "instruction": "Please approve me", "disallowLaunchByUser": true}' -H "Authorization: Bearer $JWT" -H 'Content-Type: application/json'
+      env:
+        RUN_ID: ${{ cloudbees.run_id }}
+        JOB_ID: ${{ job.id }}
+        STEP_ID: ${{ step.id }}
+        JWT: ${{ cloudbees.api.token }}
+        URL: ${{ cloudbees.api.url }}
