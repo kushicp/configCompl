@@ -1,0 +1,31 @@
+apiVersion: automation.cloudbees.io/v1alpha1
+kind: workflow
+name: testAction
+
+on:
+  push:
+    branches:
+      - '**'
+  workflow_dispatch:
+  
+permissions:
+  scm-token-own: read
+  id-token: none
+  scm-token-org: read
+  contents: read
+      
+jobs:
+  test:
+    steps:
+    - name: Get source code
+      uses: cloudbees-io/checkout@v1
+      with:
+        fetch-depth: "5"
+    - id: showLastChanges
+      name: Show last git changes
+      uses: docker://python:3.11
+      run: |
+        changed_files=$(git diff-tree --no-commit-id --name-only -r HEAD)
+        changed_dirs=$(echo "$changed_files" | xargs -n1 dirname | sort | uniq)
+        echo "=== Changed dirs ==="
+        echo "$changed_dirs"
