@@ -33,7 +33,7 @@ jobs:
       name: Create Manual Approve
       uses: docker://alpine/curl:latest
       run: |  
-        curl -i -X 'POST' "$URL/v1/workflows/approval" -d '{"approvers": ["0a808e26-f884-11ec-aa0a-42010a83ae55"], "instruction": "Please approve kushal's req", "disallowLaunchByUser": false}' -H "Authorization: Bearer $JWT" -H 'Content-Type: application/json'
+        curl -i -X 'POST' "$URL/v1/workflows/approval" -d '{"approvers": ["0a808e26-f884-11ec-aa0a-42010a83ae55"], "instruction": "Please approve kushal req", "disallowLaunchByUser": false}' -H "Authorization: Bearer $JWT" -H 'Content-Type: application/json'
       env:
         RUN_ID: ${{ cloudbees.run_id }}
         JOB_ID: ${{ job.id }}
