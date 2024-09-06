@@ -44,9 +44,8 @@ jobs:
       name: Respond to Manual Approval
       uses: docker://alpine/curl:latest
       run: |  
-        curl -i -X 'POST' "$URL/v1/workflows/$WORKFLOW_ID/runs/$RUN_ID/attempts/1/jobs/$JOB_ID/approval" -d '{ "approved": true,"comments": "Passed"}' -H "Authorization: Bearer $JWT" -H 'Content-Type: application/json'
+        curl -i -X 'POST' "$URL/v1/workflows/8f66482b-2e53-47b2-950e-7894771a2eaf/runs/$RUN_ID/attempts/1/jobs/$JOB_ID/approval" -d '{ "approved": true,"comments": "Passed"}' -H "Authorization: Bearer $JWT" -H 'Content-Type: application/json'
       env:
-        WORKFLOW_ID: ${{ cloudbees.workflow_id }}
         RUN_ID: ${{ cloudbees.run_id }}
         JOB_ID: ${{ job.id }}
         STEP_ID: ${{ step.id }}
